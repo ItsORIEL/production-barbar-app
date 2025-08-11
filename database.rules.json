@@ -1,0 +1,51 @@
+{
+  "rules": {
+    "userProfiles": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        ".write": "(auth != null && auth.uid === $uid) || (auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true)",
+        "phone": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length < 15"
+        },
+        "isAdmin": {
+          ".write": "(auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true) || (!data.exists() && newData.val() === true && $uid === '9DMvFUdDV2Yz3YwKwJCfA0Ger7T2')"
+        }
+      }
+    },
+    "reservations": {
+      ".indexOn": ["userId", "date"],
+      ".read": "auth != null",
+      "$reservationId": {
+        // CORRECTED: All conditions for .write are part of a single string, joined by ||
+        ".write": "(auth != null && newData.child('userId').val() === auth.uid && newData.child('id').val() === $reservationId && !data.exists()) || (auth != null && data.exists() && data.child('userId').val() === auth.uid) || (auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true)",
+        // CORRECTED: All conditions for .validate are part of a single string, joined by &&
+        ".validate": "newData.hasChildren(['name', 'phone', 'time', 'date', 'userId', 'id']) && newData.child('userId').isString() && newData.child('date').isString() && newData.child('date').val().matches(/^\\d{4}-\\d{2}-\\d{2}$/) && newData.child('time').isString() && newData.child('time').val().matches(/^\\d{2}:\\d{2}$/) && newData.child('id').isString() && newData.child('id').val() === $reservationId"
+      }
+    },
+    "barberNews": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true",
+      ".indexOn": ["timestamp"],
+      "$newsId": {
+        ".validate": "newData.hasChildren(['message', 'timestamp']) && newData.child('message').isString()"
+      }
+    },
+    "blockedDays": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true",
+      "$date": {
+        ".validate": "newData.isBoolean() && newData.val() === true && $date.matches(/^\\d{4}-\\d{2}-\\d{2}$/)"
+      }
+    },
+    "blockedTimeSlots": {
+      ".read": "auth != null",
+      ".write": "auth != null && root.child('userProfiles').child(auth.uid).child('isAdmin').val() === true",
+      "$date": {
+        ".validate": "$date.matches(/^\\d{4}-\\d{2}-\\d{2}$/)",
+        "$time": {
+          ".validate": "newData.isBoolean() && newData.val() === true && $time.matches(/^\\d{2}:\\d{2}$/)"
+        }
+      }
+    }
+  }
+}

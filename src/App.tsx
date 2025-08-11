@@ -17,7 +17,7 @@ import {
 import { User } from 'firebase/auth';
 import { OpenInExternalBrowserPage } from './components/OpenInExternalBrowserPage';
 
-const ADMIN_UID = 'REPLACE_WITH_NEW_ADMIN_UID'; // the barbar UID specificly
+const ADMIN_UID = '9DMvFUdDV2Yz3YwKwJCfA0Ger7T2'; // the barbar UID specificly
 
 const SHOW_FRIDAYS_BY_DEFAULT = true;
 const SHOW_SATURDAYS_BY_DEFAULT = false;
