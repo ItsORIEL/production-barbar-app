@@ -1,0 +1,115 @@
+/* src/components/LoginPage.css */
+.login-container {
+  position: relative;
+  height: 100vh;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bg-circle1,
+.bg-circle2 {
+  position: absolute;
+  background: #ffd6e1;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.bg-circle1 {
+  width: 200px;
+  height: 200px;
+  top: -50px;
+  left: -50px;
+}
+
+.bg-circle2 {
+  width: 300px;
+  height: 300px;
+  bottom: -100px;
+  right: -100px;
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  width: 350px; /* Slightly wider for new buttons */
+  padding: 40px 30px;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-card .title {
+  font-size: 24px;
+  margin-bottom: 10px; /* Adjusted margin */
+  color: #333;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 500; /* Adjusted font weight */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* Specific button styles - you can refine these */
+.google-button {
+  background-color: #4285F4; /* Google Blue */
+  color: white;
+}
+.google-button:hover {
+  background-color: #357ae8;
+}
+
+.apple-button {
+  background-color: #000000; /* Apple Black */
+  color: white;
+  margin-top: 15px; /* Space between buttons */
+}
+.apple-button:hover {
+  background-color: #333333;
+}
+
+.login-button img {
+  width: 20px; /* Adjust as needed */
+  height: 20px; /* Adjust as needed */
+  margin-right: 12px;
+  vertical-align: middle;
+}
+
+/* Responsive Styles */
+@media (max-width: 480px) {
+  .login-card {
+    width: 85%; /* Adjust for smaller screens */
+    padding: 30px 20px;
+  }
+
+  .login-card .title {
+    font-size: 22px;
+  }
+
+  .login-button {
+    padding: 12px;
+    font-size: 15px;
+  }
+}

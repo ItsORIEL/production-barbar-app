@@ -1,0 +1,533 @@
+/* src/components/ClientPage.css */
+:root {
+  --primary-color: #ff3366;
+  --secondary-color: #4a90e2;
+  --background-color: #f8f9fa;
+  --card-background: #ffffff;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --border-color: #eaeaea;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --disabled-bg: #f0f0f0;
+  --disabled-text: #aaa;
+  --disabled-border: #e0e0e0;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.appointment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* --- Header --- */
+.client-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow wrapping */
+  gap: 10px;
+}
+.page-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-right: auto; /* Push actions to the right */
+}
+.client-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between buttons in header */
+}
+/* Specific Client Buttons */
+.action-button-small.client-update-phone-btn {
+  border-color: var(--secondary-color) !important;
+  color: var(--secondary-color) !important;
+  padding: 8px 16px !important;
+}
+.action-button-small.client-update-phone-btn:hover {
+  background-color: var(--secondary-color) !important;
+  color: white !important;
+}
+.back-button.client-signout-btn {
+  color: var(--primary-color) !important;
+  font-size: 1em !important;
+  font-weight: 500 !important;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.back-button.client-signout-btn:hover {
+  color: #e62958 !important; /* Darker primary */
+}
+
+/* General small action button style (used by Update Phone) */
+.action-button-small {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.action-button-small:hover:not(:disabled) {
+    background-color: rgba(0,0,0,0.05);
+}
+.action-button-small:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* --- General Card Styling --- */
+.appointment-card {
+  padding: 24px;
+  border-radius: 16px;
+  background-color: var(--card-background);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  transition: transform 0.2s ease-in-out; /* Subtle lift effect */
+}
+.appointment-card:hover {
+  transform: translateY(-2px);
+}
+.client-booking-card {
+  margin-top: 20px;
+}
+
+.card-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--secondary-color);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.card-title {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 4px;
+  color: var(--text-primary);
+}
+.card-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* --- News Card Specific Styles --- */
+.news-log-card {
+  background-color: #f0f4f8; /* Light blue/grey background */
+  border: 1px solid #dfe6ec;
+}
+.news-log-card .card-label.news-label {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+}
+.news-log-card .card-title.news-message {
+  font-size: 1em;
+  white-space: pre-wrap; /* Respect line breaks */
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+.news-log-card .card-subtitle.news-timestamp {
+  font-size: 0.75em;
+  color: var(--text-secondary);
+}
+
+/* --- Date Selector --- */
+.date-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(85px, 1fr)); /* Slightly wider */
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  gap: 10px; /* Slightly larger gap */
+}
+.date-option {
+  text-align: center;
+  cursor: pointer;
+  padding: 12px 8px;
+  border-radius: 12px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  position: relative;
+  min-height: 65px; /* Consistent height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--card-background); /* Ensure base background */
+}
+.date-option:focus {
+    outline: 2px solid var(--secondary-color); /* Focus indicator */
+    outline-offset: 2px;
+}
+.date-option:hover:not(.blocked):not(.selected) {
+  background-color: rgba(74, 144, 226, 0.1);
+  border-color: rgba(74, 144, 226, 0.3);
+  transform: translateY(-1px); /* Subtle lift on hover */
+}
+.date-option.selected {
+  background-color: var(--secondary-color);
+  color: white;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.4);
+  border-color: var(--secondary-color);
+}
+/* Blocked Date Styles */
+.date-option.blocked {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+  opacity: 0.7;
+  border-color: var(--disabled-border);
+  box-shadow: none;
+  transform: none;
+}
+.date-option.blocked:hover { /* Override hover effect */
+  background-color: var(--disabled-bg);
+  border-color: var(--disabled-border);
+  transform: none;
+}
+.date-option.blocked:focus {
+    outline: none; /* Remove focus outline for disabled */
+}
+
+.blocked-indicator-client {
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--primary-color, #ff3366);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+.date-day {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+.date-number {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+.date-option.selected .date-number,
+.date-option.selected .date-day {
+  opacity: 1;
+}
+.date-option.blocked .date-day,
+.date-option.blocked .date-number {
+  opacity: 0.7; /* Further fade text if blocked */
+}
+.no-dates-available {
+    grid-column: 1 / -1; /* Span across all columns */
+    text-align: center;
+    padding: 15px;
+    color: var(--text-secondary);
+    font-style: italic;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+/* --- Timezone Info --- */
+.time-zone {
+  padding: 10px 0; /* Reduced padding */
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+/* --- Time Grid --- */
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Ensure min-width is sufficient */
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.time-button {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px 8px; /* Adjusted padding for two lines */
+  text-align: center;
+  background-color: var(--card-background);
+  transition: all 0.2s;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  color: var(--text-primary); /* Default text color for time part */
+  
+  /* Flexbox for vertical layout */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  min-height: 60px; /* Ensure a consistent minimum height */
+  box-sizing: border-box; /* Include padding and border in height */
+  line-height: 1.3; /* Adjust line height for better spacing */
+}
+
+/* Styles for the time display line */
+.time-button-time-display {
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: block;
+  color: inherit; /* Inherit base color from .time-button */
+}
+
+/* Styles for the status display line */
+.time-button-status-display {
+  font-size: 0.7rem;
+  color: var(--text-secondary); /* Default subtle color for status */
+  display: block;
+  margin-top: 2px;
+  min-height: 0.8em; /* Reserve space */
+  font-style: italic;
+}
+
+/* Hover and Focus States */
+.time-button:focus {
+    outline: 2px solid var(--secondary-color);
+    outline-offset: 1px;
+}
+.time-button:hover:not(:disabled) {
+  border-color: var(--secondary-color);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+.time-button:hover:not(:disabled) .time-button-time-display {
+  /* Optionally change time color on hover if desired, e.g., color: var(--secondary-color); */
+}
+.time-button:hover:not(:disabled) .time-button-status-display {
+  /* Optionally change status color on hover if desired */
+}
+
+.time-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Disabled/Booked/Past Time Styles (General) */
+.time-button.booked, .time-button:disabled {
+  background-color: var(--disabled-bg);
+  cursor: not-allowed;
+  border-color: var(--disabled-border);
+  box-shadow: none;
+  transform: none;
+  opacity: 0.8;
+}
+.time-button.booked:focus, .time-button:disabled:focus {
+    outline: none;
+}
+.time-button.booked .time-button-time-display,
+.time-button:disabled .time-button-time-display {
+    color: var(--disabled-text); /* Dim time text */
+}
+.time-button.booked .time-button-status-display,
+.time-button:disabled .time-button-status-display {
+    color: var(--disabled-text); /* Dim status text */
+    opacity: 0.8;
+}
+
+/* Style for Admin Blocked Slot */
+.time-button.admin-blocked-slot { /* This is a type of 'booked' */
+    background-color: #ffebee; 
+    border-color: #ef9a9a;
+}
+.time-button.admin-blocked-slot:hover {
+    background-color: #ffebee; /* Prevent hover change */
+    border-color: #ef9a9a;
+}
+.time-button.admin-blocked-slot .time-button-time-display {
+  color: #c62828;
+  font-weight: bold;
+}
+.time-button.admin-blocked-slot .time-button-status-display {
+  color: #c62828; /* Darker red text for status */
+  font-weight: normal; /* Or bold if preferred */
+  font-style: normal; /* Override italic if needed */
+}
+
+/* Specific Time Button States */
+.time-button.your-reservation {
+  background-color: #e8f4ff; /* Light blue */
+  border-color: var(--secondary-color);
+  box-shadow: 0 1px 4px rgba(74, 144, 226, 0.2);
+}
+.time-button.your-reservation .time-button-time-display {
+  color: var(--secondary-color);
+  font-weight: 600;
+}
+.time-button.your-reservation .time-button-status-display {
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-style: normal;
+}
+
+.time-button.selected { /* Highlighted before confirmation */
+  background-color: rgba(74, 144, 226, 0.15);
+  border-color: var(--secondary-color);
+}
+.time-button.selected .time-button-time-display {
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+.time-button.selected .time-button-status-display {
+  color: var(--secondary-color);
+  font-weight: 500;
+  font-style: normal;
+}
+
+
+/* Message when a day is blocked */
+.day-blocked-message {
+    text-align: center;
+    padding: 20px 15px;
+    margin-top: 15px;
+    background-color: #fffbe6; /* Light yellow warning background */
+    color: #8a6d3b; /* Dark yellow text */
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+/* --- Action Buttons Group --- */
+.button-group {
+  display: flex;
+  justify-content: center; /* Center button(s) */
+  gap: 16px;
+  margin-top: 24px;
+}
+/* Confirm Button */
+.action-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 24px; /* Adjusted padding */
+  min-width: 180px; /* Ensure decent width */
+  font-weight: 500;
+  font-size: 1rem; /* Slightly larger font */
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.action-button:hover:not(:disabled) {
+  background-color: #e62958; /* Darker primary */
+  box-shadow: 0 6px 14px rgba(255, 51, 102, 0.4);
+  transform: translateY(-2px);
+}
+.action-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(255, 51, 102, 0.3);
+}
+.action-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.7;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: white;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  border-radius: 30px;
+  padding: 14px 24px;
+  min-width: 180px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.cancel-button:hover {
+  background-color: rgba(255, 51, 102, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(255, 51, 102, 0.1);
+}
+.cancel-button:active {
+  transform: translateY(0);
+  background-color: rgba(255, 51, 102, 0.1);
+  box-shadow: none;
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .time-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  }
+  .date-selector {
+    grid-template-columns: repeat(auto-fit, minmax(75px, 1fr)); /* Adjust minmax */
+  }
+}
+
+@media (max-width: 480px) {
+  .client-page-header {
+    flex-direction: column;
+    align-items: flex-start; /* Align title left */
+    gap: 15px; /* Increase gap */
+  }
+  .client-header-actions {
+    width: 100%;
+    justify-content: flex-end; /* Keep actions right */
+  }
+  .page-title {
+    font-size: 1.15rem; /* Slightly larger */
+  }
+  .appointment-card {
+      padding: 15px; /* Reduce padding */
+  }
+  .date-selector {
+    grid-template-columns: repeat(3, 1fr); /* Force 3 columns */
+    gap: 8px;
+  }
+   .date-option {
+    min-height: 60px;
+    padding: 8px 4px;
+  }
+  .date-day { font-size: 0.8rem; }
+  .date-number { font-size: 0.75rem; }
+  .blocked-indicator-client { font-size: 0.65rem; }
+
+  .time-grid {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); /* Adjust minmax if needed */
+    gap: 10px;
+  }
+   .time-button {
+       padding: 8px 6px; /* Adjust padding if needed */
+       min-height: 55px; /* Adjust min-height for smaller screens */
+   }
+   .time-button-time-display {
+       font-size: 0.8rem;
+   }
+   .time-button-status-display {
+       font-size: 0.65rem;
+   }
+  .action-button-small {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .action-button, .cancel-button {
+      font-size: 0.95rem;
+      padding: 12px 20px;
+      min-width: 150px;
+  }
+  .button-group {
+      flex-direction: column; /* Stack buttons */
+      align-items: center;
+  }
+}
